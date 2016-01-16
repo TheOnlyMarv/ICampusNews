@@ -7,5 +7,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Just a simple Test" android:textSize="100dp"/>
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test"/>
 
 </LinearLayout>
