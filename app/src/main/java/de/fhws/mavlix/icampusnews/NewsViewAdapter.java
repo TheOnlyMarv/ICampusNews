@@ -38,7 +38,7 @@ public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsVi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return newsList.size();
     }
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder{
@@ -49,7 +49,7 @@ public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsVi
             super(itemView);
             date = (TextView)itemView.findViewById(R.id.date);
             headline = (TextView)itemView.findViewById(R.id.headline);
-            description = (TextView)itemView.findViewById(R.id.card_view);
+            description = (TextView)itemView.findViewById(R.id.description);
         }
 
         public void assignData(News news){
