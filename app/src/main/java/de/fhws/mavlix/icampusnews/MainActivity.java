@@ -13,10 +13,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Fragment testFragment = new TestFragment();
+        /*Fragment testFragment = new TestFragment();
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.mainFrameLayout,testFragment);
+        ft.commit();*/
+
+        Fragment newsListFragment = new NewsListFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mainFrameLayout, newsListFragment);
         ft.commit();
 
     }
