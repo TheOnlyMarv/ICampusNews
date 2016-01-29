@@ -2,6 +2,9 @@ package de.fhws.mavlix.icampusnews;
 
 import android.os.AsyncTask;
 
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -39,8 +42,14 @@ public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> imp
                 saxParser.parse(is,handler);
                 return handler.getNewsList();
             }
+            catch (SAXException ex){
+                onLoadError("Parserfehler");
+            }
+            catch (IOException ex){
+                onLoadError("Keine Verbindung zum Internet");
+            }
             catch (Exception ex){
-                onLoadError("Fehler bei der Verbindung oder beim Parser");
+                onLoadError("Unbekannter Fehler");
             }
             finally {
                 urlConnection.disconnect();
@@ -51,7 +60,6 @@ public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> imp
 
     @Override
     protected void onPostExecute(List<News> newses) {
-        //super.onPostExecute(newses);
         if(newses != null){
             onLoadSuccessful(newses);
         }

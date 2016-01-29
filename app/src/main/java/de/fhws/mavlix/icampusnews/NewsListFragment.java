@@ -1,8 +1,9 @@
 package de.fhws.mavlix.icampusnews;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,8 +49,15 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
     }
 
     @Override
-    public void onLoadError(String msg) {
-        //Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    public void onLoadError(final String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
         Log.e("Error", "onLoadError: " + msg);
     }
 }
