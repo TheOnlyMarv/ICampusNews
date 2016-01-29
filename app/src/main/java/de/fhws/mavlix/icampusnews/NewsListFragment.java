@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
     }
 
     public void initialViews(View inflatedView){
+        ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),1));
@@ -40,10 +43,13 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
         newsViewAdapter = new NewsViewAdapter(newsList, R.layout.cardview_news, getActivity()) ;
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(newsViewAdapter);
+        ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onLoadError(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+        Log.e("Error", "onLoadError: " + msg);
     }
 }
