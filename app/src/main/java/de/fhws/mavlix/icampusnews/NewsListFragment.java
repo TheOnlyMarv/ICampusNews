@@ -1,8 +1,8 @@
 package de.fhws.mavlix.icampusnews;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +53,7 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                Snackbar.make(inflatedView, msg, Snackbar.LENGTH_LONG).show();
                 ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
                 progressBar.setVisibility(View.INVISIBLE);
             }

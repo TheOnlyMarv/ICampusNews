@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        card_view:cardElevation="8dp"
+        card_view:cardElevation="4dp"
         card_view:cardCornerRadius="8dp" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_background_color">
+            android:background="@color/primary_light">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="date"
                 android:textStyle="bold|italic"
-                android:textColor="@color/cardview_date_color"
+                android:textColor="@color/primary_text"
                 android:id="@+id/date"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="headline (max. 5 Lanes)"
-                android:textColor="@color/cardview_headline_color"
+                android:textColor="@color/primary_text"
                 android:textStyle="bold"
                 android:id="@+id/headline"
                 android:layout_below="@+id/date"
@@ -51,6 +51,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="description (max. 3 Lanes)"
                 android:id="@+id/description"
