@@ -2,16 +2,13 @@ package de.fhws.mavlix.icampusnews;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NewsListViewAdapter.Events {
 
@@ -39,12 +36,23 @@ public class MainActivity extends AppCompatActivity implements NewsListViewAdapt
         collapsingToolbarLayout.setTitle("FHWS News");
 
         newsListFragment = new NewsListFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFrameLayout, newsListFragment);
-        ft.commit();
+        replaceFragment(newsListFragment);
 
+    }
 
+    private void replaceFragment(Fragment fragment) {
+        String backStateName = fragment.getClass().getName();
+
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
+
+        if (!fragmentPopped) { //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+            ft.replace(R.id.mainFrameLayout, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
     }
 
     @Override
@@ -61,10 +69,6 @@ public class MainActivity extends AppCompatActivity implements NewsListViewAdapt
     @Override
     public void OnNewsClick(News news) {
         NewsFragment newsFragment = new NewsFragment().LoadNews(news);
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFrameLayout, newsFragment);
-        ft.commit();
-        Log.d("News received", news.toString());
+        replaceFragment(newsFragment);
     }
 }
