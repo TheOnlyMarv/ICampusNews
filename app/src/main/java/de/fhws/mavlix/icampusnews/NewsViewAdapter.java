@@ -12,12 +12,12 @@ import java.util.List;
 /**
  * Created by Marvin on 28.01.2016.
  */
-public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsViewHolder> {
+public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsViewHolder>{
     private static List<News> newsList;
     private int layout;
-    public static Context context;
+    protected static Events context;
 
-    public NewsViewAdapter(List<News> news, int layout, Context context){
+    public NewsViewAdapter(List<News> news, int layout, Events context){
         this.newsList = news;
         this.layout = layout;
         NewsViewAdapter.context = context;
@@ -41,21 +41,33 @@ public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsVi
         return newsList.size();
     }
 
-    public static class NewsViewHolder extends RecyclerView.ViewHolder{
+
+    public static class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final TextView date, headline,description;
+        private News news;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             date = (TextView)itemView.findViewById(R.id.date);
             headline = (TextView)itemView.findViewById(R.id.headline);
             description = (TextView)itemView.findViewById(R.id.description);
+            itemView.setOnClickListener(this);
         }
 
         public void assignData(News news){
             this.date.setText(news.getPubDate());
             this.headline.setText(news.getTitle());
             this.description.setText(news.getDescription());
+            this.news = news;
         }
+
+        @Override
+        public void onClick(View v) {
+            context.OnNewsClick(news);
+        }
+    }
+    public interface Events{
+        void OnNewsClick(News news);
     }
 }

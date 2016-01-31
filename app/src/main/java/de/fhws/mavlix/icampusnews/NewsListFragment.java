@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class NewsListFragment extends Fragment implements NetworkEvents {
+public class NewsListFragment extends Fragment implements NetworkEvents, NewsViewAdapter.Events {
 
     NewsViewAdapter newsViewAdapter;
     View inflatedView = null;
@@ -41,7 +41,7 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
     @Override
     public void onLoadSuccessful(List<News> newsList) {
         Log.d("Success", "onLoadSuccessful: Liste fertig runtergeladen");
-        newsViewAdapter = new NewsViewAdapter(newsList, R.layout.cardview_news, getActivity()) ;
+        newsViewAdapter = new NewsViewAdapter(newsList, R.layout.cardview_news, this) ;
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(newsViewAdapter);
         ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
@@ -59,5 +59,10 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
             }
         });
         Log.e("Error", "onLoadError: " + msg);
+    }
+
+    @Override
+    public void OnNewsClick(News news) {
+        Log.d("NewsClicked", news.toString());
     }
 }
