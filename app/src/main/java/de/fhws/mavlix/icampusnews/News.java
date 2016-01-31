@@ -1,5 +1,9 @@
 package de.fhws.mavlix.icampusnews;
 
+import android.text.Html;
+import android.util.Log;
+import android.util.Xml;
+
 /**
  * Created by Marvin on 14.01.2016.
  */
@@ -49,7 +53,7 @@ public class News {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = Html.fromHtml(content).toString();
     }
 
     public String getCategory() {

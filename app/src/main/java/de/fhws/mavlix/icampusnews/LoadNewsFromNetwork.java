@@ -68,7 +68,6 @@ public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> imp
 
     @Override
     public void onLoadSuccessful(List<News> newsList) {
-        Log.d("Content", "onLoadSuccessful: " + newsList.get(0).getContent());
         context.onLoadSuccessful(newsList);
     }
 
