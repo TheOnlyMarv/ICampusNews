@@ -11,13 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.List;
 
-public class NewsListFragment extends Fragment implements NetworkEvents, NewsViewAdapter.Events {
+public class NewsListFragment extends Fragment implements NetworkEvents {
 
-    NewsViewAdapter newsViewAdapter;
+    NewsListViewAdapter newsListViewAdapter;
     View inflatedView = null;
 
     @Nullable
@@ -34,16 +33,15 @@ public class NewsListFragment extends Fragment implements NetworkEvents, NewsVie
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),1));
-        final NetworkEvents context = this;
-        new LoadNewsFromNetwork(context).execute("http://www.welearn.de/rss.xml");
+        new LoadNewsFromNetwork(this).execute("http://www.welearn.de/rss.xml");
     }
 
     @Override
     public void onLoadSuccessful(List<News> newsList) {
         Log.d("Success", "onLoadSuccessful: Liste fertig runtergeladen");
-        newsViewAdapter = new NewsViewAdapter(newsList, R.layout.cardview_news, this) ;
+        newsListViewAdapter = new NewsListViewAdapter(newsList, R.layout.cardview_news, (NewsListViewAdapter.Events) getActivity());
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(newsViewAdapter);
+        recyclerView.setAdapter(newsListViewAdapter);
         ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
         progressBar.setVisibility(View.INVISIBLE);
     }
@@ -61,8 +59,4 @@ public class NewsListFragment extends Fragment implements NetworkEvents, NewsVie
         Log.e("Error", "onLoadError: " + msg);
     }
 
-    @Override
-    public void OnNewsClick(News news) {
-        Log.d("NewsClicked", news.toString());
-    }
 }

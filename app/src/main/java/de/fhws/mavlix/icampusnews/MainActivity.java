@@ -13,7 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewsListViewAdapter.Events {
 
     Fragment newsListFragment;
 
@@ -56,5 +56,15 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void OnNewsClick(News news) {
+        NewsFragment newsFragment = new NewsFragment().LoadNews(news);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mainFrameLayout, newsFragment);
+        ft.commit();
+        Log.d("News received", news.toString());
     }
 }

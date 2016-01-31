@@ -22,7 +22,7 @@
                 android:textColor="@color/secondary_text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="hier steht mal der super coole Inhalt der Nachricht und ich schreibe grade nur so viel, damit ich sehen kann, wie der Text aussieht, wenn es über mehrere Zeilen geht. super cool, bli bla blubb"
-                android:id="@+id/text"
+                android:id="@+id/newsText"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="4dp"

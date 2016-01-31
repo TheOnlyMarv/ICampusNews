@@ -1,73 +1,86 @@
 package de.fhws.mavlix.icampusnews;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 /**
- * Created by Marvin on 28.01.2016.
+ * Created by Marvin on 31.01.2016.
  */
-public class NewsViewAdapter extends RecyclerView.Adapter<NewsViewAdapter.NewsViewHolder>{
-    private static List<News> newsList;
-    private int layout;
-    protected static Events context;
+public class NewsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public NewsViewAdapter(List<News> news, int layout, Events context){
-        this.newsList = news;
-        this.layout = layout;
-        NewsViewAdapter.context = context;
+    private static News news;
+
+    public NewsViewAdapter(News news) {
+        this.news = news;
     }
 
     @Override
-    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-        NewsViewHolder newsViewHolder = new NewsViewHolder(v);
-        return newsViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == 0) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_headline, parent, false);
+            return new HeadlineViewHolder(v);
+        } else if (viewType == 1) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_text, parent, false);
+            return new TextViewHolder(v);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int position) {
-        final News news = this.newsList.get(position);
-        holder.assignData(news);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (position == 0) {
+            ((HeadlineViewHolder) holder).assignData(news);
+        } else if (position == 1) {
+            ((TextViewHolder) holder).assignData(news);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return 2;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
-    public static class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class HeadlineViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView date, headline,description;
-        private News news;
+        private final TextView date, title;
 
-        public NewsViewHolder(View itemView) {
+        News news;
+
+        public HeadlineViewHolder(View itemView) {
             super(itemView);
-            date = (TextView)itemView.findViewById(R.id.date);
-            headline = (TextView)itemView.findViewById(R.id.headline);
-            description = (TextView)itemView.findViewById(R.id.description);
-            itemView.setOnClickListener(this);
+            date = (TextView) itemView.findViewById(R.id.newsDate);
+            title = (TextView) itemView.findViewById(R.id.newsTitle);
         }
 
-        public void assignData(News news){
-            this.date.setText(news.getPubDate());
-            this.headline.setText(news.getTitle());
-            this.description.setText(news.getDescription());
+        public void assignData(News news) {
             this.news = news;
-        }
-
-        @Override
-        public void onClick(View v) {
-            context.OnNewsClick(news);
+            date.setText(news.getPubDate());
+            title.setText(news.getTitle());
         }
     }
-    public interface Events{
-        void OnNewsClick(News news);
+
+    public static class TextViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView text;
+
+        News news;
+
+        public TextViewHolder(View itemView) {
+            super(itemView);
+            text = (TextView) itemView.findViewById(R.id.newsText);
+        }
+
+        public void assignData(News news) {
+            this.news = news;
+            this.text.setText(news.getContent());
+        }
     }
 }
