@@ -1,6 +1,7 @@
 package de.fhws.mavlix.icampusnews;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.xml.sax.SAXException;
 
@@ -18,10 +19,10 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> implements NetworkEvents {
 
-    private NetworkEvents contex;
+    private NetworkEvents context;
 
-    public LoadNewsFromNetwork(NetworkEvents contex){
-        this.contex = contex;
+    public LoadNewsFromNetwork(NetworkEvents context){
+        this.context = context;
     }
 
     @Override
@@ -67,11 +68,12 @@ public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> imp
 
     @Override
     public void onLoadSuccessful(List<News> newsList) {
-        contex.onLoadSuccessful(newsList);
+        Log.d("Content", "onLoadSuccessful: " + newsList.get(0).getContent());
+        context.onLoadSuccessful(newsList);
     }
 
     @Override
     public void onLoadError(String msg) {
-        contex.onLoadError(msg);
+        context.onLoadError(msg);
     }
 }
