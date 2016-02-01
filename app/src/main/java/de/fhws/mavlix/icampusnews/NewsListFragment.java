@@ -23,11 +23,11 @@ public class NewsListFragment extends Fragment implements NetworkEvents {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         inflatedView = inflater.inflate(R.layout.fragment_news_list,container,false);
-        initialViews(inflatedView);
+        loadNewsList();
         return inflatedView;
     }
 
-    public void initialViews(View inflatedView){
+    public void loadNewsList(){
         ProgressBar progressBar = (ProgressBar)inflatedView.findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
         RecyclerView recyclerView = (RecyclerView)inflatedView.findViewById(R.id.recyclerView);

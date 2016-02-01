@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NewsListViewAdapt
         newsListFragment = new NewsListFragment();
         replaceFragment(newsListFragment);
 
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -59,7 +63,12 @@ public class MainActivity extends AppCompatActivity implements NewsListViewAdapt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_reload:
-                getSupportFragmentManager().beginTransaction().detach(newsListFragment).attach(newsListFragment).commit();
+                if(newsListFragment.isVisible()) {
+                    ((NewsListFragment)newsListFragment).loadNewsList();
+                }
+                else{
+                    replaceFragment(newsListFragment);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
