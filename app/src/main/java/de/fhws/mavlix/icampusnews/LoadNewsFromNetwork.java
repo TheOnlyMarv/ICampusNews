@@ -37,20 +37,23 @@ public class LoadNewsFromNetwork extends AsyncTask<String, Void, List<News>> imp
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream is = urlConnection.getInputStream();
 
-                SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+                NewsParser parser = new NewsParser();
+                return parser.parse(is);
+                /*SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
                 SAXParser saxParser = saxParserFactory.newSAXParser();
                 NewsHandler handler = new NewsHandler();
-                saxParser.parse(is,handler);
-                return handler.getNewsList();
+                saxParser.parse(is,handler);*/
+                //return handler.getNewsList();
             }
-            catch (SAXException ex){
+            /*catch (SAXException ex){
                 onLoadError("Parserfehler");
-            }
+            }*/
             catch (IOException ex){
                 onLoadError("Keine Verbindung zum Internet");
             }
             catch (Exception ex){
-                onLoadError("Unbekannter Fehler");
+                Log.e("ParserError", ex.toString());
+                onLoadError("Fehler beim Parser");
             }
             finally {
                 urlConnection.disconnect();

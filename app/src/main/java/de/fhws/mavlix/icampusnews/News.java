@@ -8,6 +8,7 @@ import android.util.Xml;
  * Created by Marvin on 14.01.2016.
  */
 public class News {
+    private static int idCounter = 0;
     private int id;
     private String title;
     private String link;
@@ -15,6 +16,20 @@ public class News {
     private String content;
     private String category;
     private String pubDate;
+
+    public News(){
+        this.id = News.idCounter++;
+    }
+
+    public News(String title, String link, String description, String content, String category, String pubDate) {
+        this();
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        setContent(content);
+        this.category = category;
+        this.pubDate = pubDate;
+    }
 
     public int getId() {
         return id;

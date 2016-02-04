@@ -6,7 +6,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by Marvin on 14.01.2016.
  */
